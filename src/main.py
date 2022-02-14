@@ -8,18 +8,24 @@ class Interrupt:
         ## A pin variable to recieve the duty cycles.
         self.pinC1 = pyb.Pin(pyb.Pin.cpu.C1, pyb.Pin.OUT_PP)
         self.pinC0 = pyb.Pin(pyb.Pin.cpu.C0, pyb.Pin.IN)
-
+        
+        ## A variable for the analog to digital conversion of pin C0.
         self.adc = pyb.ADC(self.pinC0)
         
-        # This queue holds unsigned short (16-bit) integers
-        self.my_queue = task_share.Queue('H', 1000, name="My Queue")
+        ## A queue that holds unsigned short (16-bit) integers.
+        self.my_queue = task_share.Queue('h', 2500, name="My Queue")
         
+        ## A variable that represents the number of runs.
         self.runs = 0
+        
+        ## A variable that indicates the end of the loop.
         self.end_flag = 0
+        
+        ## A variable for time.
         self.time = 0
 
     def read_adc(self,IRQ_src):
-        if self.runs < 500:
+        if self.runs < 2500:
             v_out = self.adc.read()
             # Somewhere in one task, put data into the queue
             self.my_queue.put (v_out,in_ISR = True)
@@ -33,9 +39,10 @@ class Interrupt:
             utime.sleep_ms(1)
             print('{:},{:}'.format(self.time,self.my_queue.get(in_ISR = True)))
             self.time += 1
-            if self.end_flag == 1:
-                print('Done')
-                self.pinC1.low()
+        if self.end_flag == 1:
+            self.my_queue.put(-99,in_ISR = True)
+            print(self.my_queue.get(in_ISR = True))
+            self.pinC1.low()
 
 if __name__ == '__main__':
     ## The timer variable for the motor.
