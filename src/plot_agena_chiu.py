@@ -32,10 +32,11 @@ with serial.Serial('COM21', 115200) as f:
             f.write(b'\x02')
             f.write(b'\x04')
             break
-        elif b'MicroPython' in text:
+        elif b'reboot' in text:
             break
         text = f.readline()
     time.sleep(0.1)
+    print('creating plot')
 
     while True:
         ## A variable that reads lines of code from the Nucleo.
@@ -51,7 +52,7 @@ with serial.Serial('COM21', 115200) as f:
                     continue
                 elif data[0].strip().isalpha() == True or data[1].strip().isalpha() == True:
                     continue             
-            elif b'Done' in data[0]:
+            elif b'-99' in data[0]:
                 break
         else:
             x_val.append(float(data[0].strip()))
