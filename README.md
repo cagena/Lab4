@@ -15,7 +15,7 @@ The hand calculations below show how the time constant was found.
 
 The figure below shows the hand calculations for the theoretical time constant.
 
-![alt text](Time_Constant_From_HandCalcs.png)
+![alt text](Time_Const_From_HandCalcs.png)
 
 **Figure 1. Time Constant Hand Calculations.**
 
@@ -42,7 +42,7 @@ The plot above shows that 5 time constants is approximately 1800ms.
 
 The figure below shows our quick calculation to find time constant from the plot.
 
-![alt text](Time_Constant_From_Plot.png)
+![alt text](Time_Const_From_Plot.png)
 
 **Figure 4. Hand Calculations for Time Constant from Plot.**
 
