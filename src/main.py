@@ -1,8 +1,20 @@
+"""!
+@file main.py
+This is the main file for Lab 4, it contains a program that measures voltage and prints to the
+serial port.
+@author Corey Agena
+@author Luisa Chiu
+@date 2-14-2022
+"""
+
 import pyb
 import utime
 import task_share
 
 class Interrupt:
+    '''! 
+    This class implements an interrupt to measure the voltage at the specified frequency. 
+    '''
     def __init__(self):
 
         ## A pin variable to recieve the duty cycles.
@@ -47,6 +59,7 @@ class Interrupt:
 if __name__ == '__main__':
     ## The timer variable for the motor.
     tim = pyb.Timer(1, freq = 1000)
+    ## Object created for the interrupt class.
     interrupt = Interrupt()
     tim.callback(interrupt.read_adc)
     utime.sleep_ms(5)
