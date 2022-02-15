@@ -13,7 +13,7 @@ class Interrupt:
         self.adc = pyb.ADC(self.pinC0)
         
         ## A queue that holds unsigned short (16-bit) integers.
-        self.my_queue = task_share.Queue('h', 2500, name="My Queue")
+        self.my_queue = task_share.Queue('h', 1000, name="My Queue")
         
         ## A variable that represents the number of runs.
         self.runs = 0
@@ -25,7 +25,7 @@ class Interrupt:
         self.time = 0
 
     def read_adc(self,IRQ_src):
-        if self.runs < 2500:
+        if self.runs < 1500:
             v_out = self.adc.read()
             # Somewhere in one task, put data into the queue
             self.my_queue.put (v_out,in_ISR = True)

@@ -27,16 +27,20 @@ with serial.Serial('COM21', 115200) as f:
     f.write(b'\x04')
     ## A variable used to hold lines read from the serial port.
     text = f.readline()
+    ## A variable for the amount of runs in the loop checking for CTRL-B.
+    b_runs = 0
     while True:
         if b'CTRL-B' in text:
             f.write(b'\x02')
             f.write(b'\x04')
             break
-        elif b'reboot' in text:
-            break
+        else:
+            if b_runs == 5:
+                break
+            b_runs += 1
         text = f.readline()
     time.sleep(0.1)
-    print('creating plot')
+    print('Creating Plot')
 
     while True:
         ## A variable that reads lines of code from the Nucleo.
